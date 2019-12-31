@@ -1,27 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Switch, Route } from 'react-router-dom';
+
 import Navbar from './components/Navbar/Navbar';
+import Home from './components/Home/Home';
 import SpeechToSign from './components/SpeechToSign/SpeechToSign';
 import SignToSpeech from './components/SignToSpeech/SignToSpeech';
 
 import classes from './App.module.css';
 
 const App = (props) => {
-  const [display, setDisplay] = useState('sign-to-speech');
-
-  const handleLinkClick = (linkName) => setDisplay(linkName);
-
-  let currentDisplay = <SignToSpeech />
-
-  if (display === 'speech-to-sign') {
-    currentDisplay = <SpeechToSign />
-  }
-
   return (
     <div className={classes.App}>
-      <Navbar onLinkClicked={handleLinkClick} />
-      <main className={classes.mainContent}>
-        {currentDisplay}
-      </main>
+      <Navbar />
+      <Switch>
+        <Route path="/" exact component={Home} />
+        <Route path="/speech-to-sign" component={SpeechToSign} />
+        <Route path="/sign-to-speech" component={SignToSpeech} />
+      </Switch>
     </div>
   );
 }
