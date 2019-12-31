@@ -36,6 +36,7 @@
 }
 
 .NavLink {
+  text-decoration: none;
   font-size: .9rem;
   background-color: #406E8E;
   padding: .5rem;

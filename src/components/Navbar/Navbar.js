@@ -1,7 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import classes from './Navbar.module.css';
 
-const Navbar = props => {
+const Navbar = (props) => {
   return (
     <nav className={classes.Navbar}>
       <ul className={classes.Navigation}>
@@ -10,8 +11,12 @@ const Navbar = props => {
         </li>
         <li className={classes.col70}>
           <ul className={classes.NavLinks}>
-            <li className={classes.NavLink} onClick={() => props.onLinkClicked('sign-to-speech')}>Signs to Speech</li>
-            <li className={classes.NavLink} onClick={() => props.onLinkClicked('speech-to-sign')}>Speech to Signs</li>
+            <li>
+              <Link className={classes.NavLink} to="/sign-to-speech">Signs to Speech</Link>
+            </li>
+            <li>
+              <Link className={classes.NavLink} to="/speech-to-sign">Speech to Signs</Link>
+            </li>
           </ul>
         </li>
       </ul>
