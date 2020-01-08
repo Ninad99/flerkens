@@ -1,0 +1,27 @@
+.inputContainer {
+  width: 50%;
+}
+
+.outputContainer {
+  width: 90%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.micOn {
+  cursor: pointer;
+}
+
+.micOn:hover {
+  color: green;
+}
+
+.micOff {
+  cursor: pointer;
+}
+
+.micOff:hover {
+  color: red;
+}
