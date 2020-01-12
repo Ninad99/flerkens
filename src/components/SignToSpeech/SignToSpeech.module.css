@@ -64,3 +64,25 @@
 .labelContainer div:not(:last-child) {
   margin-right: 1rem;
 }
+
+.navLink {
+  background-color: #406e8e;
+  padding: .5rem 1.25rem;
+  border-radius: 4px;
+}
+
+.whiteText {
+  color: white;
+}
+
+.whiteText:link {
+  text-decoration: none;
+}
+
+.navLink:hover {
+  background-color: rgb(34, 80, 112);
+}
+
+.navLink:not(:last-child) {
+  margin-right: 1rem;
+}

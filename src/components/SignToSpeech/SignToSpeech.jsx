@@ -23,13 +23,17 @@ const SignToSpeech = props => {
   }, []);
 
   const stringAdder = () => {
-    generatedString += predictedAlphabet;
-    displayString.current.childNodes[0].innerHTML = generatedString;
+    if (predictedAlphabet) {
+      generatedString += predictedAlphabet;
+      displayString.current.childNodes[0].innerHTML = generatedString;
+    }
   };
 
   const makeItSpeak = () => {
-    var msg = new SpeechSynthesisUtterance(generatedString);
-    window.speechSynthesis.speak(msg);
+    if (generatedString) {
+      var msg = new SpeechSynthesisUtterance(generatedString);
+      window.speechSynthesis.speak(msg);
+    }
   };
 
   const makeTheSpeechStop = () => {
@@ -61,10 +65,7 @@ const SignToSpeech = props => {
     const prediction = await model.predict(webcam.canvas);
     for (let i = 1; i < maxPredictions; i++) {
       if (prediction[i].probability > 0.8) {
-        labelContainer.current.childNodes[0].innerHTML =
-          prediction[i].className;
-        //+ ": " + prediction[i].probability.toFixed(2);
-        predictedAlphabet = prediction[i].className;
+        labelContainer.current.childNodes[0].innerHTML = predictedAlphabet = prediction[i].className;
       }
     }
   };
