@@ -15,7 +15,7 @@ const add = async (alphabet) => {
     return null;
   }
   const inputAlpha = alphabet.toLowerCase();
-  const storageRef = await storage.ref(`signs/${inputAlpha}.jpg`);
+  const storageRef = storage.ref(`signs/${inputAlpha}.jpg`);
 
   let url = null;
   try {
@@ -43,7 +43,7 @@ const SpeechToSign = (props) => {
     setOutputImages(images);
     setShowImages(true);
     setIsLoading(false);
-  }, [setShowImages, setOutputImages, textInput]);
+  }, [textInput]);
 
 
   return (

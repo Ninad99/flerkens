@@ -4,7 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar';
 import Home from './components/Home/Home';
 import SpeechToSign from './components/SpeechToSign/SpeechToSign';
-import SignToSpeech from './components/SignToSpeech/SignToSpeech';
+import SignToSpeech from './components/SignToSpeech/SignToSpeech.jsx';
 
 import classes from './App.module.css';
 

@@ -47,24 +47,6 @@
   font-size: .75rem;
 }
 
-.labelContainer {
-  width: 100%;
-  flex-wrap: wrap;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.labelContainer div {
-  padding: .1rem .3rem;
-  border: 1px solid black;
-  margin-bottom: .5rem;
-}
-
-.labelContainer div:not(:last-child) {
-  margin-right: 1rem;
-}
-
 .navLink {
   background-color: #406e8e;
   padding: .5rem 1.25rem;
