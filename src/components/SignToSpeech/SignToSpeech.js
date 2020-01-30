@@ -148,6 +148,7 @@ const SignToSpeech = props => {
   return (
     <div className={classes.SignToSpeech}>
       <Container className={classes.wrapper}>
+        <h1>Signs to Speech</h1>
         <Row className="p-4">
           <Col
             md={6}

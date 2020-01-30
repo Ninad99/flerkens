@@ -4,8 +4,8 @@ import * as tmImage from "@teachablemachine/image";
 import classes from "./Webcam.module.css";
 
 let model, webcam = null;
-const modelURL = process.env.REACT_APP_MODEL_URL.slice(1, -2) + "model.json";
-const metadataURL = process.env.REACT_APP_MODEL_URL.slice(1, -2) + "metadata.json";
+const modelURL = "https://teachablemachine.withgoogle.com/models/e7Px4sVm/model.json";
+const metadataURL = "https://teachablemachine.withgoogle.com/models/e7Px4sVm/metadata.json";
 
 const Webcam = props => {
   const { setPredictedAlphabet } = props;
