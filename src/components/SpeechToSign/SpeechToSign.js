@@ -33,7 +33,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMicrophoneAlt } from "@fortawesome/free-solid-svg-icons";
+import { faMicrophoneAlt, faMicrophoneAltSlash } from "@fortawesome/free-solid-svg-icons";
 import classes from "./SpeechToSign.module.css";
 
 const SpeechToSign = props => {
@@ -41,6 +41,7 @@ const SpeechToSign = props => {
   const [textInput, setTextInput] = useState("");
   const [showImages, setShowImages] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isListening, setIsListening] = useState(false);
 
   const getImagePath = alphabet => {
     switch (alphabet) {
@@ -123,20 +124,27 @@ const SpeechToSign = props => {
       <div className="d-flex justify-content-around align-items-center">
         <span className="mr-2">
           <FontAwesomeIcon
-            className={classes.micOn}
-            icon={faMicrophoneAlt}
+            className={!isListening ? classes.micOn : classes.micOff}
+            icon={!isListening ? faMicrophoneAlt : faMicrophoneAltSlash}
             size="2x"
-            onMouseDown={listen}
-            onMouseUp={stop}
+            onClick={e => {
+              if (!isListening) {
+                setIsListening(true);
+                listen();
+              } else {
+                setIsListening(false);
+                stop();
+              }
+            }}
           />{" "}
         </span>{" "}
       </div>{" "}
-      <div>Hold Down the mic button to Record Your Voice</div>
+      <div>Press the mic button to Record Your Voice</div>
       {listening && <div> Listening... </div>}{" "}
       {isLoading ? (
         <Spinner animation="grow" variant="primary" />
       ) : (
-        <p> You 'll get your results here..</p>
+        <p> You'll get your results here..</p>
       )}{" "}
       <div className={classes.outputContainer}>
         {" "}
