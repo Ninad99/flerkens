@@ -2,6 +2,7 @@
   background-color: #406e8e;
   padding: .5rem 1.25rem;
   border-radius: 4px;
+  margin: 0 .5rem;
 }
 
 .whiteText {
@@ -14,8 +15,4 @@
 
 .navLink:hover {
   background-color: rgb(34, 80, 112);
-}
-
-.navLink:not(:last-child) {
-  margin-right: 1rem;
 }
