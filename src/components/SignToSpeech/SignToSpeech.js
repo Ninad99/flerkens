@@ -86,62 +86,34 @@ const SignToSpeech = props => {
 
   const getImagePath = () => {
     switch (predictedAlphabet) {
-      case "a":
-        return path_a;
-      case "b":
-        return path_b;
-      case "c":
-        return path_c;
-      case "d":
-        return path_d;
-      case "e":
-        return path_e;
-      case "f":
-        return path_f;
-      case "g":
-        return path_g;
-      case "h":
-        return path_h;
-      case "i":
-        return path_i;
-      case "j":
-        return path_j;
-      case "k":
-        return path_k;
-      case "l":
-        return path_l;
-      case "m":
-        return path_m;
-      case "n":
-        return path_n;
-      case "o":
-        return path_o;
-      case "p":
-        return path_p;
-      case "q":
-        return path_q;
-      case "r":
-        return path_r;
-      case "s":
-        return path_s;
-      case "t":
-        return path_t;
-      case "u":
-        return path_u;
-      case "v":
-        return path_v;
-      case "w":
-        return path_w;
-      case "x":
-        return path_x;
-      case "y":
-        return path_y;
-      case "z":
-        return path_z;
-      case " ":
-        return path_space;
-      default:
-        return null;
+      case "a": return path_a;
+      case "b": return path_b;
+      case "c": return path_c;
+      case "d": return path_d;
+      case "e": return path_e;
+      case "f": return path_f;
+      case "g": return path_g;
+      case "h": return path_h;
+      case "i": return path_i;
+      case "j": return path_j;
+      case "k": return path_k;
+      case "l": return path_l;
+      case "m": return path_m;
+      case "n": return path_n;
+      case "o": return path_o;
+      case "p": return path_p;
+      case "q": return path_q;
+      case "r": return path_r;
+      case "s": return path_s;
+      case "t": return path_t;
+      case "u": return path_u;
+      case "v": return path_v;
+      case "w": return path_w;
+      case "x": return path_x;
+      case "y": return path_y;
+      case "z": return path_z;
+      case " ": return path_space;
+      default: return null;
     }
   };
 
@@ -151,7 +123,7 @@ const SignToSpeech = props => {
         <h1>Signs to Speech</h1>
         <Row className="p-4">
           <Col
-            md={6}
+            md={8}
             className="p-2 d-flex justify-content-center align-items-center"
           >
             <div className={classes.webcamContainer}>
@@ -159,37 +131,37 @@ const SignToSpeech = props => {
             </div>
           </Col>
           <Col
-            md={6}
+            md={4}
             className="p-2 d-flex flex-column justify-content-center align-items-center"
           >
             <h4>Predicted alphabet: {predictedAlphabet}</h4>
+            <div className={classes.predictedAlphabetContainer}>
+              <img
+                className={classes.predictedAlphabetImage}
+                src={getImagePath()}
+                height="50px"
+                width="50px"
+                alt="OutputImage"
+              />
+            </div>
             <div className="d-flex justify-content-around align-items-center w-100 py-4">
-              <div className={classes.predictedAlphabetContainer}>
-                <img
-                  className={classes.predictedAlphabetImage}
-                  src={getImagePath()}
-                  height="50px"
-                  width="50px"
-                  alt="OutputImage"
-                />
-              </div>
               <button
                 className={classes.createStringButton}
                 onClick={createPredictedString}
               >
-                <FontAwesomeIcon icon={faCheckCircle} size="2x" />
+                <FontAwesomeIcon icon={faCheckCircle} className={classes.responsiveIcon} />
               </button>
               <button
                 className={classes.clearStringButton}
                 onClick={popChar}
               >
-                <FontAwesomeIcon icon={faBackspace} size="2x" />
+                <FontAwesomeIcon icon={faBackspace} className={classes.responsiveIcon} />
               </button>
               <button
                 className={classes.clearStringButton}
                 onClick={clearPredictedString}
               >
-                <FontAwesomeIcon icon={faRedo} size="2x" />
+                <FontAwesomeIcon icon={faRedo} className={classes.responsiveIcon} />
               </button>
             </div>
             <p>Generated Msg: {generatedString}</p>
