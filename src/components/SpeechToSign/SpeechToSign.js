@@ -1,7 +1,5 @@
 import React, { useState, useCallback,useEffect } from "react";
 import { useSpeechRecognition } from "react-speech-kit";
-import '../SpeechToSign/display.css'
-//import axios from 'axios';
 import path_a from "../../assets/pngs/a.png";
 import path_b from "../../assets/pngs/b.png";
 import path_c from "../../assets/pngs/c.png";
@@ -38,25 +36,31 @@ import { faMicrophoneAlt, faMicrophoneAltSlash } from "@fortawesome/free-solid-s
 import classes from "./SpeechToSign.module.css";
 
 const SpeechToSign = props => {
-  
-
-
-
- 
   const [outputImages, setOutputImages] = useState([]);
   const [textInput, setTextInput] = useState("");
   
   const [showImages, setShowImages] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isListening, setIsListening] = useState(false);
+  
+  const handleInput = useCallback(async () => {
+    setIsLoading(true);
+    const images = [];
+    for (let char of textInput) {
+      const imgURL = getImagePath(char.toLocaleLowerCase());
+      images.push(imgURL);
+    }
+    setOutputImages(images);
+    setShowImages(true);
+    setIsLoading(false);
+  }, [setShowImages, setOutputImages, textInput]);
 
   useEffect(() => {
     handleInput(); // using camelCase for variable name is recommended.
-  }, [textInput]); // this will call getChildChange when ever name changes.
- 
+  }, [textInput, handleInput]); // this will call getChildChange when ever name changes.
+
 
   const getImagePath = alphabet => {
-   
     switch (alphabet) {
       case "a": return path_a;
       case "b": return path_b;
@@ -91,32 +95,17 @@ const SpeechToSign = props => {
 
   const resetInput = () => {
     setTextInput("");
-    
     setOutputImages([]);
   };
-
-  const handleInput = useCallback(async () => {
-    setIsLoading(true);
-    const images = [];
-    for (let char of textInput) {
-      const imgURL = getImagePath(char.toLocaleLowerCase());
-      images.push(imgURL);
-    }
-    setOutputImages(images);
-    setShowImages(true);
-    setIsLoading(false);
-  }, [setShowImages, setOutputImages, textInput]);
 
   const { listen, listening, stop } = useSpeechRecognition({
     onResult: result => {
       setTextInput(result);
-     
-
     }
   });
 
   return (
-    <div>
+  <div>
     <div className="bg-dark text-light d-flex flex-column justify-content-center align-items-center">
       <h1> Welcome to Speech to Sign! </h1>{" "}
       <h3>
@@ -125,15 +114,12 @@ const SpeechToSign = props => {
       <div className={classes.inputContainer}>
         <Form.Control
           value={textInput}
-          onChange={event => {setTextInput(event.target.value) 
-      
-            }}
+          onChange={event => setTextInput(event.target.value)}
           type="text"
           placeholder="Enter text here or Click on the Mic button"
         />
       </div>{" "}
       <div className="my-3 d-flex justify-content-around align-items-center">
-        
         <Button variant="primary" onClick={resetInput}>
           Reset{" "}
         </Button>
@@ -163,42 +149,34 @@ const SpeechToSign = props => {
       ) : (
         <p> You'll get your results below..</p>
       )}{" "}
-     
     </div>
-     <div className={classes.outputContainer}><div className = "Hover">
-     {" "}
-     <div className = "Center">
-     {showImages
-       ? outputImages.map((imgURL, index) => {
-           if (imgURL) {
-             
-             return (
-               
-               <img
-                 key={index}
-                 src={imgURL}
-                 style={{
-                   width: "50px",
-                   height: "50px"
-                 }}
-                 className = "center"
-                 alt="output img"
-               />
-              
-             );
-           } else {
-             return <br key={index} />;
-           }
-         })
-       : null}
-       </div>{" "}
-   </div></div>{" "}
-   </div>
+    <div className={classes.outputContainer}><div className={classes.hover}>
+    {" "}
+    <div className={classes.center}>
+    {showImages
+        ? outputImages.map((imgURL, index) => {
+          if (imgURL) {
+            return (
+              <img
+                  key={index}
+                  src={imgURL}
+                  style={{
+                    width: "50px",
+                    height: "50px"
+                  }}
+                  className={classes.center}
+                  alt="output img"
+                />
+            );
+          } else {
+            return <br key={index} />;
+          }
+        })
+      : null}
+      </div>{" "}
+    </div></div>{" "}
+  </div>
   );
-  
 };
-
-
-
 
 export default SpeechToSign;
