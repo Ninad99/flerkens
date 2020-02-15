@@ -10,6 +10,17 @@
   flex-wrap: wrap;
 }
 
+.center {
+    margin: 0 auto; 
+    
+}
+
+.hover {
+    z-index: 100;
+    margin: 0 auto;
+    padding-top: 10rem; 
+}
+
 .micOn {
   cursor: pointer;
 }
