@@ -1,13 +1,15 @@
-import React, { useRef, useEffect, useCallback } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import * as tmImage from "@teachablemachine/image";
+import Spinner from 'react-bootstrap/Spinner';
 import classes from "./Webcam.module.css";
 let model;
-const modelURL = "https://teachablemachine.withgoogle.com/models/e7Px4sVm/model.json";
-const metadataURL = "https://teachablemachine.withgoogle.com/models/e7Px4sVm/metadata.json";
+const modelURL = "https://teachablemachine.withgoogle.com/models/B2T0Xdg8/model.json";
+const metadataURL = "https://teachablemachine.withgoogle.com/models/B2T0Xdg8/metadata.json";
 
 const Webcam = props => {
   const cv = window.cv;
   const { setPredictedAlphabet } = props;
+  const [isLoading, setIsLoading] = useState(true);
   const webcamContainer = useRef();
   const videoContainer = useRef();
   const canvasContainer = useRef();
@@ -33,7 +35,7 @@ const Webcam = props => {
         cap = new cv.VideoCapture(video);
         frame = new cv.Mat(video.height, video.width, cv.CV_8UC4);
         fgmask = new cv.Mat(video.height, video.width, cv.CV_8UC1);
-        fgbg = new cv.BackgroundSubtractorMOG2(0, 0, false);
+        fgbg = new cv.BackgroundSubtractorMOG2(100, 16, false);
 
         navigator.mediaDevices.getUserMedia({ video: true, audio: false })
           .then(function(stream) {
@@ -54,7 +56,7 @@ const Webcam = props => {
           let begin = Date.now();
           // start processing.
           cap.read(frame);
-          fgbg.apply(frame, fgmask, -1.0);
+          fgbg.apply(frame, fgmask, .9);
           cv.imshow('canvas_output', fgmask);
           // schedule the next one.
           let delay = 1000/FPS - (Date.now() - begin);
@@ -66,9 +68,9 @@ const Webcam = props => {
       };
       // first call
       timeoutId = setTimeout(processVideo, 0);
+      setIsLoading(false);
     }
     init();
-    
     return () => {
       if (frame) { frame.delete(); }
       if (fgmask) { fgmask.delete(); }
@@ -78,10 +80,17 @@ const Webcam = props => {
   }, [cv, predict]);
 
   return (
-    <div className={classes.webcams} ref={webcamContainer}>
-      <video id="cam_input" ref={videoContainer} height="200" width="200"></video>
-      <canvas id="canvas_output" ref={canvasContainer} height="200" width="200"></canvas>
-    </div>
+    <>
+      {isLoading ? (
+        <Spinner animation="border" role="status">
+          <span className="sr-only">Loading...</span>
+        </Spinner>
+      ) : null}
+      <div className={classes.webcams} ref={webcamContainer}>
+        <video id="cam_input" ref={videoContainer} height="200" width="200"></video>
+        <canvas id="canvas_output" ref={canvasContainer} height="200" width="200"></canvas>
+      </div>
+    </>
   );
 };
 

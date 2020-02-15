@@ -62,7 +62,8 @@
 }
 
 .predictedStringContainer {
-  height: 100px;
+  padding: 1rem;
+  min-height: 100px;
   box-shadow: 5px 5px 6px rgba(0, 0, 0, 0.16);
   width: 650px;
   background-color: #343a40;
