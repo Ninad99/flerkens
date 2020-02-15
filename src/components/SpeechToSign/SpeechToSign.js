@@ -1,6 +1,7 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback,useEffect } from "react";
 import { useSpeechRecognition } from "react-speech-kit";
-
+import '../SpeechToSign/display.css'
+//import axios from 'axios';
 import path_a from "../../assets/pngs/a.png";
 import path_b from "../../assets/pngs/b.png";
 import path_c from "../../assets/pngs/c.png";
@@ -37,13 +38,25 @@ import { faMicrophoneAlt, faMicrophoneAltSlash } from "@fortawesome/free-solid-s
 import classes from "./SpeechToSign.module.css";
 
 const SpeechToSign = props => {
+  
+
+
+
+ 
   const [outputImages, setOutputImages] = useState([]);
   const [textInput, setTextInput] = useState("");
+  
   const [showImages, setShowImages] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isListening, setIsListening] = useState(false);
 
+  useEffect(() => {
+    handleInput(); // using camelCase for variable name is recommended.
+  }, [textInput]); // this will call getChildChange when ever name changes.
+ 
+
   const getImagePath = alphabet => {
+   
     switch (alphabet) {
       case "a": return path_a;
       case "b": return path_b;
@@ -78,6 +91,7 @@ const SpeechToSign = props => {
 
   const resetInput = () => {
     setTextInput("");
+    
     setOutputImages([]);
   };
 
@@ -96,10 +110,13 @@ const SpeechToSign = props => {
   const { listen, listening, stop } = useSpeechRecognition({
     onResult: result => {
       setTextInput(result);
+     
+
     }
   });
 
   return (
+    <div>
     <div className="bg-dark text-light d-flex flex-column justify-content-center align-items-center">
       <h1> Welcome to Speech to Sign! </h1>{" "}
       <h3>
@@ -108,15 +125,15 @@ const SpeechToSign = props => {
       <div className={classes.inputContainer}>
         <Form.Control
           value={textInput}
-          onChange={event => setTextInput(event.target.value)}
+          onChange={event => {setTextInput(event.target.value) 
+      
+            }}
           type="text"
           placeholder="Enter text here or Click on the Mic button"
         />
       </div>{" "}
       <div className="my-3 d-flex justify-content-around align-items-center">
-        <Button variant="primary" className="mr-2" onClick={handleInput}>
-          Convert{" "}
-        </Button>{" "}
+        
         <Button variant="primary" onClick={resetInput}>
           Reset{" "}
         </Button>
@@ -144,32 +161,44 @@ const SpeechToSign = props => {
       {isLoading ? (
         <Spinner animation="grow" variant="primary" />
       ) : (
-        <p> You'll get your results here..</p>
+        <p> You'll get your results below..</p>
       )}{" "}
-      <div className={classes.outputContainer}>
-        {" "}
-        {showImages
-          ? outputImages.map((imgURL, index) => {
-              if (imgURL) {
-                return (
-                  <img
-                    key={index}
-                    src={imgURL}
-                    style={{
-                      width: "50px",
-                      height: "50px"
-                    }}
-                    alt="output img"
-                  />
-                );
-              } else {
-                return <br key={index} />;
-              }
-            })
-          : null}{" "}
-      </div>{" "}
+     
     </div>
+     <div className={classes.outputContainer}><div className = "Hover">
+     {" "}
+     <div className = "Center">
+     {showImages
+       ? outputImages.map((imgURL, index) => {
+           if (imgURL) {
+             
+             return (
+               
+               <img
+                 key={index}
+                 src={imgURL}
+                 style={{
+                   width: "50px",
+                   height: "50px"
+                 }}
+                 className = "center"
+                 alt="output img"
+               />
+              
+             );
+           } else {
+             return <br key={index} />;
+           }
+         })
+       : null}
+       </div>{" "}
+   </div></div>{" "}
+   </div>
   );
+  
 };
+
+
+
 
 export default SpeechToSign;
