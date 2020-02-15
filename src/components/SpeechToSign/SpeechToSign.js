@@ -1,7 +1,5 @@
 import React, { useState, useCallback,useEffect } from "react";
 import { useSpeechRecognition } from "react-speech-kit";
-import '../SpeechToSign/display.css'
-//import axios from 'axios';
 import path_a from "../../assets/pngs/a.png";
 import path_b from "../../assets/pngs/b.png";
 import path_c from "../../assets/pngs/c.png";
@@ -38,11 +36,6 @@ import { faMicrophoneAlt, faMicrophoneAltSlash } from "@fortawesome/free-solid-s
 import classes from "./SpeechToSign.module.css";
 
 const SpeechToSign = props => {
-  
-
-
-
- 
   const [outputImages, setOutputImages] = useState([]);
   const [textInput, setTextInput] = useState("");
   
@@ -110,8 +103,6 @@ const SpeechToSign = props => {
   const { listen, listening, stop } = useSpeechRecognition({
     onResult: result => {
       setTextInput(result);
-     
-
     }
   });
 
@@ -165,9 +156,9 @@ const SpeechToSign = props => {
       )}{" "}
      
     </div>
-     <div className={classes.outputContainer}><div className = "Hover">
+     <div className={classes.outputContainer}><div className={classes.hover}>
      {" "}
-     <div className = "Center">
+     <div className={classes.center}>
      {showImages
        ? outputImages.map((imgURL, index) => {
            if (imgURL) {
@@ -181,7 +172,7 @@ const SpeechToSign = props => {
                    width: "50px",
                    height: "50px"
                  }}
-                 className = "center"
+                 className={classes.center}
                  alt="output img"
                />
               
