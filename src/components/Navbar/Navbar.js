@@ -34,7 +34,7 @@ const ExportedNavbar = props => {
               <Link to="/custom-signs" className={classes.whiteText}> Custom Signs </Link>
             </div>
             <div className={classes.navLink} onClick={signOut}>
-              <Link className={classes.whiteText}>Logout</Link>
+              <span className={classes.whiteText}>Logout</span>
             </div>
           </Nav>
         ) : null}
