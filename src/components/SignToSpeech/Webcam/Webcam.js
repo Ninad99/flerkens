@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, useCallback } from "react";
 import * as tmImage from "@teachablemachine/image";
 import Spinner from 'react-bootstrap/Spinner';
 import classes from "./Webcam.module.css";
+
 let model;
 const modelURL = "https://teachablemachine.withgoogle.com/models/B2T0Xdg8/model.json";
 const metadataURL = "https://teachablemachine.withgoogle.com/models/B2T0Xdg8/metadata.json";
@@ -75,6 +76,10 @@ const Webcam = props => {
       if (frame) { frame.delete(); }
       if (fgmask) { fgmask.delete(); }
       if (fgbg) { fgbg.delete(); }
+      if (video) {
+        video.pause();
+        video.src = null;
+      }
       clearTimeout(timeoutId);
     };
   }, [cv, predict]);

@@ -47,6 +47,12 @@ const CustomSignsWebcam = props => {
             }
         }
         init();
+
+        return async () => {
+            if (webcam) {
+                await webcam.stop();
+            }
+        }
     }, []);
     const myDefineClassifierModel = async (myPassedClassifier) => {
         let myLayerList = []
@@ -71,37 +77,36 @@ const CustomSignsWebcam = props => {
             myLayerList[3][myClassifierLoop] = tf.layers.dense({units: 1024, name: classes[myClassifierLoop]}).apply(myLayerList[1][myClassifierLoop]);             //Define concatenate layer 
         }
         // what the layers used to look like before the loop                                                                                            
-    //const myInput2 = tf.input({shape: [1], name: 'myInput2'});
-    //const myInput2Dense1 = tf.layers.dense({units: 20, name: 'myInput2Dense1'}).apply(myInput2);
-    console.log('Concatenate Paths')                                                                                                                                                                                          
-    const myConcatenate1 = tf.layers.concatenate({axis : 1, name: 'myConcatenate1'}).apply(myLayerList[3]);    // send the entire list of dense                                                                                           
-    const myConcatenate1Dense4 = tf.layers.dense({units: 1, name: 'myConcatenate1Dense4'}).apply(myConcatenate1)                                                                                              
-    
-    console.log('Define Model');                                                                                                                                                                                    
-    const myClassifierModel = tf.model({inputs: myLayerList[1], outputs: myConcatenate1Dense4});    // This would be a global model. With list of inputs as an array                                                                                                                                                                                         
-    myClassifierModel.summary()
-    console.log('myClassifierModel.layers[myMaxClasses]')     
-    console.log(myClassifierModel.layers[myMaxClasses])
-    myPassedClassifier.getClassifierDataset()[0].print(true);
+        //const myInput2 = tf.input({shape: [1], name: 'myInput2'});
+        //const myInput2Dense1 = tf.layers.dense({units: 20, name: 'myInput2Dense1'}).apply(myInput2);
+        console.log('Concatenate Paths')                                                                                                                                                                                          
+        const myConcatenate1 = tf.layers.concatenate({axis : 1, name: 'myConcatenate1'}).apply(myLayerList[3]);    // send the entire list of dense                                                                                           
+        const myConcatenate1Dense4 = tf.layers.dense({units: 1, name: 'myConcatenate1Dense4'}).apply(myConcatenate1)                                                                                              
+        
+        console.log('Define Model');                                                                                                                                                                                    
+        const myClassifierModel = tf.model({inputs: myLayerList[1], outputs: myConcatenate1Dense4});    // This would be a global model. With list of inputs as an array                                                                                                                                                                                         
+        myClassifierModel.summary()
+        console.log('myClassifierModel.layers[myMaxClasses]')     
+        console.log(myClassifierModel.layers[myMaxClasses])
+        myPassedClassifier.getClassifierDataset()[0].print(true);
 
-    for (let myClassifierLoop = 0; myClassifierLoop < myMaxClasses; myClassifierLoop++ ){   // since the first layers are inputs must add maxClasses   
-        const myInWeight = await myPassedClassifier.getClassifierDataset()[myClassifierLoop]                                                                                        
-        myClassifierModel.layers[myClassifierLoop + myMaxClasses].setWeights([myInWeight, tf.ones([1024])]);       //model.layers[0].setWeights([tf.ones([10, 2]), tf.ones([2])]);                                                                                        
-    }                                                                                 
-    return  myClassifierModel;                                                                               
-}         
-
+        for (let myClassifierLoop = 0; myClassifierLoop < myMaxClasses; myClassifierLoop++ ){   // since the first layers are inputs must add maxClasses   
+            const myInWeight = await myPassedClassifier.getClassifierDataset()[myClassifierLoop]                                                                                        
+            myClassifierModel.layers[myClassifierLoop + myMaxClasses].setWeights([myInWeight, tf.ones([1024])]);       //model.layers[0].setWeights([tf.ones([10, 2]), tf.ones([2])]);                                                                                        
+        }                                                                                 
+        return  myClassifierModel;                                                                               
+    }
 
     const saveModelBtn = async () =>{
         const myClassifierModel2 = await myDefineClassifierModel(classifier)         // pass global classifier                                                                                                                                                                                                                                                                      
         myClassifierModel2.save('downloads://myClassifierModel01')  
-        myClassifierModel2.summary(null,null,x => {document.getElementById('myDivSummary').innerHTML += x + '<br>'}); 
+        myClassifierModel2.summary(null,null,x => {console.log(x)}); 
     }
 
     return (
         <div className="d-flex flex-column justify-content-center align-items-center">
             <div ref={classContainer} className="p-3">
-                <div ref={consoleRef}>{prediction === undefined ? null : classes[prediction]}</div>
+                <div ref={consoleRef}>{prediction === undefined ? null : <p>Prediction: {classes[prediction]}</p>}</div>
                 {classes.length > 0 ? classes.map((name, index) => {
                     return (
                     <button
@@ -119,7 +124,7 @@ const CustomSignsWebcam = props => {
                 <button id="add-class" onClick={addClass}>Add Class</button>
             </div>
             <video id="webcam" width="224" height="224" ref={webcamElement}></video>
-            <button className={cssClasses.saveBtn} onClick={saveModelBtn}>Save</button>
+            <button className={cssClasses.saveBtn} onClick={saveModelBtn}>Save Model</button>
         </div>
     )
 }
