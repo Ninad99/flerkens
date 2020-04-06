@@ -5,8 +5,6 @@ import './index.css';
 import App from './App';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-require('dotenv').config();
-
 ReactDOM.render(
   <BrowserRouter>
     <App />

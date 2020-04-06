@@ -7,16 +7,10 @@
 
 .wrapper {
   border: 1px solid black;
-  /* position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%); */
 }
 
 .webcamContainer {
-  height: 300px;
-  width: 300px;
-  box-shadow: 5px 5px 6px rgba(0, 0, 0, 0.16);
+  width: 100%;
 }
 
 .predictedAlphabetContainer {
@@ -29,6 +23,14 @@
   box-shadow: 5px 5px 6px rgba(0, 0, 0, 0.16);
   border-radius: 10px;
   background-color: #343a40;
+  position: relative;
+}
+
+.predictedAlphabetContainer .predictedAlphabetImage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .createStringButton {
@@ -60,7 +62,8 @@
 }
 
 .predictedStringContainer {
-  height: 100px;
+  padding: 1rem;
+  min-height: 100px;
   box-shadow: 5px 5px 6px rgba(0, 0, 0, 0.16);
   width: 650px;
   background-color: #343a40;
@@ -93,4 +96,30 @@
 
 .stopSpeechButton:hover {
   background: red;
+}
+
+.responsiveIcon {
+  font-size: 1.75rem;
+}
+
+@media screen and (max-width: 992px) {
+  .createStringButton {
+    padding: .35rem .85rem;
+  }
+
+  .clearStringButton {
+    padding: .35rem .85rem;
+  }
+
+  .responsiveIcon {
+    font-size: 1.25rem;
+  }
+
+  .startSpeechButton {
+    padding: .4rem .9rem;
+  }
+
+  .stopSpeechButton {
+    padding: .4rem .9rem;
+  }
 }
